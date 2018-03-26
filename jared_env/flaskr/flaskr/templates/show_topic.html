@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block body %}
+    <form action="{{ url_for('topical') }}" method=post class=add-entry>
+        Topic to retreive:<input type=text size=30 name=title value='{{session.whattopic}}'>
+        <br/><input type=submit value=Retrieve topic>
+      
+    </form>
+  <ul class=entries>
+  {% for entry in entries %}
+    <li><h2>{{ entry.title }}</h2>{{ entry.text|safe }}
+  {% else %}
+    <li><em>Unbelievable.  Nothing on that topic so far</em>
+  {% endfor %}
+  </ul>
+{% endblock %}
