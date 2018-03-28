@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if session.logged_in %}
+  <div class="center">
+    <h2>add a topic</h2>
+  </div>
+    <form action="{{ url_for('add_topic') }}" method=post class=add-topic>
+      <dl>
+        <dt>Title:
+        <dd><input type=text size=30 name=title>
+        <dd><input type=submit value=Share>
+      </dl>
+    </form>
+  {% endif %}
+  <div class="center">
+  <h2 id="topics">topics</h2>
+</div>
+  <ul class=topics>
+  {% for topic in topics %}
+    <li><a href="{{ '/topic/%s'%topic.title }}">><h2>{{ topic.title }}</h2></a>
+  {% else %}
+    <li><em>Unbelievable.  No topics here so far</em>
+  {% endfor %}
+  </ul>
+{% endblock %}
