@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if session.logged_in %}
+  <div class="center">
+    <h2>Edit a post</h2>
+  </div>    <form action="{{ url_for('edit_post',postId=postId) }}" method=post class=edit-post>
+      <dl>
+        <dt>Title:
+        <dd><input value="{{ post['title']  }}" type=text size=30 name=title>
+        <dt>Text:
+        <dd><textarea  name=content rows=5 cols=40>{{ post['content']  }}</textarea>
+        <dd><input type=submit value=Share>
+      </dl>
+    </form>
+  {% endif %}
+{% endblock %}
