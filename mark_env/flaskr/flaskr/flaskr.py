@@ -1,9 +1,10 @@
 import os
 import sqlite3
+
 from flask import Flask, request, session, g, redirect, url_for, abort, \
      render_template, flash
 
-
+userId = 1
 
 app = Flask(__name__) # create the application instance :)
 app.config.from_object(__name__) # load config from this file , flaskr.py
@@ -16,6 +17,7 @@ app.config.update(dict(
     PASSWORD='default'
 ))
 app.config.from_envvar('FLASKR_SETTINGS', silent=True)
+    
 
 
 def connect_db():
@@ -45,23 +47,48 @@ def get_db():
         g.sqlite_db = connect_db()
     return g.sqlite_db
 
+def getTopicId(topicName):
+    db = get_db()
+    cur = db.execute('select id from  topics where title=?',[topicName])
+    cur = cur.fetchone()
+    topicId = cur[0]
+    return topicId
+
+
 @app.teardown_appcontext
 def close_db(error):
     """Closes the database again at the end of the request."""
     if hasattr(g, 'sqlite_db'):
         g.sqlite_db.close()
 
+@app.route('/topic/<topic>/sub', methods=['POST'])
+def subscribe(topic):
+    topicId= getTopicId(topic)
+    create_subscription(userId, topicId)
+    return redirect(url_for('show_topics'))
+    
+
+@app.route('/topic/<topic>/unsub', methods=['POST'])
+def unSubscribe(topic):
+    topicId= getTopicId(topic)
+    unsubscribe(userId, topicId)
+    return redirect(url_for('show_topics'))
+
+
+
 
 @app.route('/')
 def show_topics():
     db = get_db()
-    cur = db.execute('select title from topics order by createdAt desc')
+    cur = db.execute('select title,id from topics order by createdAt desc')
+    subsList = isSubscribed(userId)
+    notifiedList = show_notifications(userId)
     topics = cur.fetchall()
-    return render_template('show_topics.html', topics=topics)
+    print(notifiedList)
+    return render_template('show_topics.html', topics=topics, subsList=subsList, notifiedList=notifiedList)
 
 @app.route('/addtopic', methods=['POST'])
 def add_topic():
-    userId = "2"
     title = request.form['title']
     db = get_db()
     db.execute('insert into topics (userId, title) values (?, ?)',
@@ -71,14 +98,13 @@ def add_topic():
     return redirect(url_for('show_topics'))
 @app.route('/topic/<topic>/addpost', methods=['POST'])
 def add_post(topic):
-    userId = "2"
     content = request.form['content']
     title = request.form['title']
-    print(content)
     db = get_db()
     db.execute('insert into posts (userId, title, content, topic) values (?, ?, ?, ?)',
                  [userId, title, content, topic])
     db.commit()
+    update_subscription(getTopicId(topic))
     flash('New entry was successfully posted')
     return redirect(url_for('show_posts',topic=topic))
 @app.route('/post/<postId>/editpost', methods=['GET','POST'])
@@ -87,7 +113,6 @@ def edit_post(postId):
     cur = db.execute('select title,content,topic from posts where id=?',[postId])    
     post = cur.fetchone()
     topic = post['topic']
-    print(post['content'])
     if(request.method == 'GET'):
     	return render_template('edit_post.html' ,post=post,postId=postId, topic=topic)	
     elif(request.method == 'POST'): 
@@ -95,14 +120,15 @@ def edit_post(postId):
 	content = request.form['content']
         db.execute('update posts set title=?, content=? where id=?', [title,content,postId])
 	db.commit()
+	update_subscription(getTopicId(topic))
 	return redirect(url_for('show_posts', topic=topic))
 
 @app.route('/topic/<topic>',methods=['GET'])
 def show_posts(topic):
     db = get_db()
-    userId = "1"
     cur = db.execute('select title, content, userId, id from posts where topic=? order by createdAt desc', [topic])
     posts = cur.fetchall()
+    view_notification(userId,getTopicId(topic))
     return render_template('show_posts.html', posts=posts, topic = topic, userId=userId) 
 
     
@@ -127,4 +153,4 @@ def logout():
     flash('You were logged out')
     return redirect(url_for('show_topics'))
 
-
+from .sub import *

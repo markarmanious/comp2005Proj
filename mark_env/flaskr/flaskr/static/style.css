@@ -36,3 +36,13 @@ h2              { font-size: 1.2em;display: inline; }
 .edit-bttn{
 	float: right;
 }
+
+.right{
+	float: right;
+}
+.inline{
+	display: inline;
+}
+.red{
+	color: red;
+}
