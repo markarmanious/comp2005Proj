@@ -3,10 +3,28 @@
 	{% if session.logged_in %}
 		<form action="{{ url_for('add_userGroup') }}" method=post class=add-entries>
 			<dl>
-				<dt>Group:
+				<dt>New Group:
 				<dd><input type=text size=30 name=groupName>
-				<dt>Members:
+				<dt>Members to add to new group(separated by a space):
 				<dd><textarea name=usersInGroup rows=5 cols=40></textarea>
+				<dd><input type=submit value=Submit>
+			</dl>
+		</form>
+		<form action="{{ url_for('add_userToAGroup') }}" method=post class=add-entries>
+			<dl>
+				<dt>Existing Group:
+				<dd><input type=text size=30 name=existingGroupName>
+				<dt>Member to add to existing group:
+				<dd><input type= text size=30 name=memberToAdd>
+				<dd><input type=submit value=Submit>
+			</dl>
+		</form>
+		<form action="{{ url_for('remove_userFromAGroup') }}" method=post class=add-entries>
+			<dl>
+				<dt>Existing Group:
+				<dd><input type=text size=30 name=existingGroupNameRemove>
+				<dt>Member to remove from existing group:
+				<dd><input type= text size=30 name=memberToRemove>
 				<dd><input type=submit value=Submit>
 			</dl>
 		</form>

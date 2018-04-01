@@ -71,7 +71,7 @@ def add_entry():
 	return redirect(url_for('show_entries'))
 
 
-#POPE Added this for groups along with user_group.html template
+#POPE Added this for groups
 @app.route('/groups', methods=['POST'])
 def add_userGroup():
         if not session.get('logged_in'):
@@ -80,6 +80,22 @@ def add_userGroup():
         return redirect(url_for('user_groups'))
 
 #POPE Added this for groups
+@app.route('/add_user_to_group', methods=['POST'])
+def add_userToAGroup():
+        if not session.get('logged_in'):
+                abort(401)
+        flash(userGroupsInterface.addMemberToGroup([request.form['existingGroupName']], [request.form['memberToAdd']]))#Flash the message from the add member attempt
+        return redirect(url_for('user_groups'))
+
+#POPE Added this for groups
+@app.route('/remove_user_from_a_group', methods=['POST'])
+def remove_userFromAGroup():
+        if not session.get('logged_in'):
+                abort(401)
+        flash(userGroupsInterface.removeMemberFromGroup([request.form['existingGroupNameRemove']], [request.form['memberToRemove']]))#Flash the message from the remove member attempt
+        return redirect(url_for('user_groups'))
+
+#POPE Added this for groups along with user_group.html template
 @app.route('/user_groups')
 def user_groups():
 	return render_template('user_groups.html')#Displays the user groups web page
