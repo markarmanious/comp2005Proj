@@ -1,4 +1,4 @@
-"""The interface for the user groups part of the 2005 term project.
+"""The interface for the user groups part of the 2005 group project.
 Flaskr should import this interface and use it to make changes to
 or get information from the user groups system.
 This interface will take the data it is given, change it into a form
