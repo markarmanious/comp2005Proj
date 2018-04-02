@@ -20,26 +20,23 @@ class FlaskrTestCase(unittest.TestCase):
 		return self.app.post('/security', data=dict(
 			usr = username), follow_redirects=True)
 	
-	def test_usern(self):
-		rv = self.app.get('/security')
-		assert b'Enter User name' in rv.data
 	
 	#test if the user is not in the database or wrong user name provided.
 	def test_user(self):
 		rv = self.Username('default')
-		assert b'Enter User name' in rv.data
+		assert b'Wrong username' in rv.data
 		rv  = self.Username('icm')
-		assert b'Answer the question' in rv.data
+		assert b'Answer question' in rv.data
 	
 	#test answer input wrong and correct answers
-	def test_question(self):
+	def test_uestion(self):
 		self.Username('icm')
 		rv = self.app.post('/question', data=dict(
 			userAnswer = 'Isaac'), follow_redirects=True)
 		assert b'Enter new password' in rv.data
 		rv = self.app.post('/question', data=dict(
-			userAnswer = 'MeAgain'), follow_redirects=True)
-		assert b'Incorrect Answer' in rv.data
+			useranswer = 'MeAgain'), follow_redirects=True)
+		assert b'Try Again' in rv.data
 	
 if __name__ == '__main__':
 	unittest.main()
