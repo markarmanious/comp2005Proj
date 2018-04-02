@@ -1,15 +1,20 @@
+"""The interface for the user groups part of the 2005 group project.
+Flaskr should import this interface and use it to make changes to
+or get information from the user groups system.
+This interface will take the data it is given, change it into a form
+that is usable by the userGroups.py code and make the calls to the
+userGroups.py code. It will then take the return information, change it
+into a form that is usable by flaskr.py, and return it to flaskr.py (the
+intended caller).
+
+"""
+
 import userGroups
 
 def init_userGroupsDB():
     """Initializes the database for user groups"""
     userGroups.init_userGroupsDB()
 
-def get_db():
-    """Gets the database for user groups
-
-    Returns the connection object to the caller
-    """
-    return userGroups.connect_db()
 
 def createGroup(group, users):
     """An interface method used to create a new user group
@@ -31,6 +36,14 @@ def addMemberToGroup(group, member):
 
     returns - A string containing a success or error message
     """
+    group = str(group[0])#Convert the given list object into a string object for processing
+    member = str(member[0])#Convert the given list object into a string object for processing
+    for i in group:#Check for spaces in group id to ensure only one group was entered
+        if i == " ":#If spaces found
+            return "Error: A group ID has no spaces in it. Please enter only one group ID"#Return error message
+    for i in member:#Check for spaces in username to ensure only one user was entered
+        if i == " ":#If spaces found
+            return "Error: A username has no spaces in it. Please add one group member at a time."#Return error message
 
     return userGroups.addMemberToGroup(group, member)
 
@@ -43,6 +56,16 @@ def removeMemberFromGroup(group, member):
 
     returns:returns - String message indicating success or failure
     """
+
+    group = str(group[0])#Convert the given list object into a string object for processing
+    member = str(member[0])#Convert the given list object into a string object for processing
+    for i in group:#Check for spaces in group id to ensure only one group was entered
+        if i == " ":#If spaces found
+            return "Error: A group ID has no spaces in it. Please enter only one group ID"#Return error message
+    for i in member:#Check for spaces in username to ensure only one user was entered
+        if i == " ":#If spaces found
+            return "Error: A username has no spaces in it. Please remove one group member at a time."#Return error message
+
 
     return userGroups.removeMemberFromGroup(group, member)
 
@@ -71,4 +94,14 @@ def getGroupMembership(userName):
     A list of all group's to which the user belongs
     """
 
-    return userGroup.getGroupsByMember(userName)
+    return userGroups.getGroupsByMember(userName)
+
+def checkIfGroupExists(group):
+    """A method used to check if a group exists
+
+    group - the ID of the group being checked
+
+    return - returns True is group exists and False if it does NOT exist
+    """
+
+    return checkIfGroupExists(group)
