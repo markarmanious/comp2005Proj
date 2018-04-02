@@ -2,7 +2,7 @@
 import os
 import sqlite3
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
-
+from .password_reset import *
 app = Flask(__name__) #create the application instance
 app.config.from_object(__name__) #load config from this file, flaskr.py
 
@@ -91,17 +91,12 @@ def logout():
 temp_user = None #global variable to hold the user seeking to reset the password
 @app.route('/security', methods=['GET', 'POST'])
 def security():
-'''
-Get the username for the username seeking to reset password. If the username is in the database then render the question template with the user
-question. If the username is not in the database reload the page.
-'''
+
 	if request.method == 'POST':
 		global temp_user
 		usr_in = request.form['usr']
 		temp_user = usr_in
-		db = get_db()
-		curr = db.execute('select * from users where username=?',(usr_in,))
-		u = curr.fetchone()
+		u = getUserInfo(usr_in)
 		if u:
 			return render_template('question.html', user_details=u)
 		else:
@@ -111,27 +106,18 @@ question. If the username is not in the database reload the page.
 
 @app.route('/question', methods=['POST'])
 def question():
-'''
-Get the answer entered by the user in response to the question and compare it to the one in the database. Renders the template to reset
-the password. 
-'''
+
 	if request.method == 'POST':
-		db = get_db()
-		curr = db.execute('select * from users where username=?',(temp_user,))
-		d = curr.fetchone()
+		d = getUserInfo(temp_user)
 		usr_ans = request.form['userAnswer']
 		return render_template('enter_password.html', user_data=d, next=usr_ans)
 
 #
 @app.route('/newPassword', methods=['POST'])
 def newPassword():
-'''
-Update the database with a new password password.
-'''
+
 	newP = request.form['newPass']
-	db = get_db()
-	db.execute('''update users set pass = ? where username=?''', (newP, temp_user,))
-	db.commit()
+	setPassword(temp_user, newP)
 	flash('Updated successfully')
 	return redirect(url_for('show_entries')) #to update with new function from whoever
 
