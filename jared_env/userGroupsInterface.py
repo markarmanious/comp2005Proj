@@ -77,7 +77,7 @@ def validateUser(userName, topicGroupID):
     False if the user is not a member of the group
     """
 
-    return userGroup.validateUser(userName, topicGroupID)
+    return userGroups.validateUser(userName, topicGroupID)
 
 def getGroupMembership(userName):
     """Given a username, returns a list of all groups to which the member belongs
