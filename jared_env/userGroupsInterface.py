@@ -11,11 +11,6 @@ intended caller).
 
 import userGroups
 
-def init_userGroupsDB():
-    """Initializes the database for user groups"""
-    userGroups.init_userGroupsDB()
-
-
 def createGroup(group, users):
     """An interface method used to create a new user group
 

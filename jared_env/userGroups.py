@@ -20,17 +20,6 @@ def connect_db():
 	databaseConnection.row_factory = sqlite3.Row#Set the row factory method to comply with sqlite3
 	return databaseConnection#Return the connection object back to caller
 
-
-def init_userGroupsDB():
-    """Initialize the database for user groups using the userGroupSchema sql file"""
-    
-    db = connect_db()#Connect to the database
-    with open('schema.sql', mode='r') as f:#Open the schema file
-            db.cursor().executescript(f.read())#Apply the schema to the database
-    db.commit()#Actually make the changes
-    db.close()#Close the database connection
-
-
 def searchDB():
     """Prints the entire user groups table from user groups database"""
     
