@@ -4,8 +4,7 @@ import sqlite3
 from flask import Flask, request, session, g, redirect, url_for, abort, \
      render_template, flash
 
-userId = 1
-
+userId = '1'
 app = Flask(__name__) # create the application instance :)
 app.config.from_object(__name__) # load config from this file , flaskr.py
 
@@ -75,21 +74,36 @@ def unSubscribe(topic):
     return redirect(url_for('show_topics'))
 
 
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    return registerUser()
+
+
+
 
 
 @app.route('/')
 def show_topics():
     db = get_db()
-    cur = db.execute('select title,id from topics order by createdAt desc')
-    subsList = isSubscribed(userId)
-    notifiedList = show_notifications(userId)
+    cur = db.execute('select title,id,groupDisscution from topics order by createdAt desc')
+    userNameCur = db.execute('select userName from users where isLoggedIn=?',[1])
+    groupList = []
+    subsList = []
+    notifiedList = []
+    groupsList = []
+    userName = userNameCur.fetchone()
+    if userName :
+        userName = userName[0]
+        groupsList = getGroupMembership(userName)
+        subsList = isSubscribed(userId)
+        notifiedList = show_notifications(userId)
     topics = cur.fetchall()
-    print(notifiedList)
-    return render_template('show_topics.html', topics=topics, subsList=subsList, notifiedList=notifiedList)
+    return render_template('show_topics.html', topics=topics, subsList=subsList, notifiedList=notifiedList,groupsList=groupsList)
 
 @app.route('/addtopic', methods=['POST'])
 def add_topic():
     title = request.form['title']
+    gorup = request.form['groupDisscution']
     db = get_db()
     db.execute('insert into topics (userId, title) values (?, ?)',
                  [userId, title])
@@ -131,26 +145,73 @@ def show_posts(topic):
     view_notification(userId,getTopicId(topic))
     return render_template('show_posts.html', posts=posts, topic = topic, userId=userId) 
 
+@app.route('/groups', methods=['POST'])
+def add_userGroup():
+        if not session.get('logged_in'):
+                abort(401)
+        flash(userGroupsInterface.createGroup([request.form['groupName']], [request.form['usersInGroup']]))#Flash the message from the group creation attempt
+        return redirect(url_for('user_groups'))
+
+@app.route('/user_groups')
+def user_groups():
+	return render_template('user_groups.html')#Displays the user groups web page
+@app.route('/remove_user_from_a_group', methods=['POST'])
+def remove_userFromAGroup():
+        if not session.get('logged_in'):
+                abort(401)
+        flash(userGroupsInterface.removeMemberFromGroup([request.form['existingGroupNameRemove']], [request.form['memberToRemove']]))#Flash the message from the remove member attempt
+        return redirect(url_for('user_groups'))
+
     
-    
+@app.route('/add_user_to_group', methods=['POST'])
+def add_userToAGroup():
+        if not session.get('logged_in'):
+                abort(401)
+        flash(userGroupsInterface.addMemberToGroup([request.form['existingGroupName']], [request.form['memberToAdd']]))#Flash the message from the add member attempt
+        return redirect(url_for('user_groups'))
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    error = None
-    if request.method == 'POST':
-        if request.form['username'] != "nana":
-            error = 'Invalid username'
-        elif request.form['password'] != "nana":
-            error = 'Invalid password'
-        else:
-            session['logged_in'] = True
-            flash('You were logged in')
-            return redirect(url_for('show_topics'))
-    return render_template('login.html', error=error)
+    return logUserIn()
 
 @app.route('/logout')
 def logout():
-    session.pop('logged_in', None)
-    flash('You were logged out')
-    return redirect(url_for('show_topics'))
+    return logUserOut()
+temp_user = None #global variable to hold the user seeking to reset the password
+@app.route('/security', methods=['GET', 'POST'])
+def security():
 
+	if request.method == 'POST':
+		global temp_user
+		usr_in = request.form['usr']
+		temp_user = usr_in
+		u = getUserInfo(usr_in)
+		if u:
+			return render_template('question.html', user_details=u)
+		else:
+			flash('Worng Username')
+			return redirect(url_for('security'))
+	return render_template('security.html')
+
+@app.route('/question', methods=['POST'])
+def question():
+
+	if request.method == 'POST':
+		d = getUserInfo(temp_user)
+		usr_ans = request.form['userAnswer']
+		return render_template('enter_password.html', user_data=d, next=usr_ans)
+
+
+@app.route('/newPassword', methods=['POST'])
+def newPassword():
+
+	newP = request.form['newPass']
+	setPassword(temp_user, newP)
+	flash('Updated successfully')
+	return redirect(url_for('show_topics')) #to update with new function from whoever
+from passwordReset import *
 from .sub import *
+from loginInterface import *
+from userGroupsInterface import *
+import userGroupsInterface
+    
