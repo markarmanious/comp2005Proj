@@ -1,0 +1,302 @@
+
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+    <meta charset="utf-8">
+    <title>COMP2005 Project Requirements Sheet</title>
+    <link rel="stylesheet" href="requirements.css">
+ </head>
+ <body>
+ <h1>Requirements List</h1>
+    <ol class="rqlist">
+        <li> Functionality
+            <ol>
+                <li>User Authentication
+                    <ol>
+                        <li>User Registration
+                            <ol>
+                                <li data-moscow=m>Users can register an account with a username and password
+                                    <p class=rqdesc>Creation of an account is necessary to gain access to the SuD.
+                                        Associated with feature 2: User password authentication.</p>
+                                    <p class=rqdata>author:gnan88; date:Wed Mar 07 16:24:13 NST 2018;</p>
+                                    <p class=rqvali>Implication of the "Account Registration" use case.</p>
+                                    <p class=rqveri>Register an account.</p>
+                                </li>
+                                <li data-moscow=m>Users can access a sign up page to register their account
+                                    <p class=rqdesc>The sign up page is accessible from the login screen and allows
+                                        registration of new accounts. Associated with feature 2: User password authentication.</p>
+                                    <p class=rqdata>author:gnan88; date:Wed Mar 08 16:29:44 NST 2018;</p>
+                                    <p class=rqvali>Implication of the "Account Registration" use case.</p>
+                                    <p class=rqveri>Access the sign up page from the login screen.</p>
+                                </li>
+                                <li data-moscow=m>User login information is stored in a database
+                                    <p class=rqdesc>When a new account is created, the username and password are passed
+                                        to the database for storage, and later retrieved for login. Associated with feature 2:
+                                        User password authentication.</p>
+                                    <p class=rqdata>author:gnan88; date:Wed Mar 08 16:52:10 NST 2018;</p>
+                                    <p class=rqvali>Implication of the "Account Registration" use case.</p>
+                                    <p class=rqveri>Create an account and log in to confirm that the creation was successful.</p>
+                                </li>
+                                <li data-moscow=m>User account names are unique
+                                    <p class=rqdesc>Any given username can only be assigned to a single acount. Attempting
+                                        to create an account with an existing username will result in an error. Associated with
+                                        feature 2: User password authentication.</p>
+                                    <p class=rqdata>author:gnan88; date:Wed Mar 08 16:56:58 NST 2018;</p>
+                                    <p class=rqvali>Implication of the "Account Registration" use case.</p>
+                                    <p class=rqveri>Attempt to create an account with an existing username and receive and error message.</p>
+                                </li>
+                                <li data-moscow=s>User passwords have a minimum length of six characters
+                                    <p class=rqdesc>Passwords cannot be any shorter than six characters to ensure account security. Attempting
+                                        to create an account with a password below the minimum length will result in an error.</p>
+                                    <p class=rqdata>author:gnan88; date:Wed Mar 08 16:59:35 NST 2018;</p>
+                                    <p class=rqvali>Implication of the "Account Registraton" use case.</p>
+                                    <p class=rqveri>Attempt to create an account with a password containing 5 characters or fewer, and receive
+                                        an error message.</p>
+                                </li>
+                            </ol>
+                        </li>
+                        <li>User Login
+                            <ol>
+                                <li data-moscow=m>Users can authenticate with Login/Password
+                                    <p class=rqdesc>User logins and passwords have to be supported, and there 
+                                        may be special users who are guests or not formally registered for the         
+                                        course. Associated with feature 2: User password authentication.</p>
+                                    <p class=rqdata>author:brown; date:Tue Jan 30 20:36:23 NST 2018;</p>
+                                    <p class=rqvali>Client interview on Jan 30 2018</p>
+                                    <p class=rqveri>Log into the system.</p>
+                                </li>
+                                <li data-moscow=s>Repeated login failure will result in temporary lockout
+                                    <p class=rqdesc>If a user enters incorrect login credentials several times, they will
+                                        be unable to attempt another login for a set period of time. Multiple consecutive lockouts
+                                        will result in an increased lockout duration.</p>
+                                    <p class=rqdata>author:gnan88; date:Wed Mar 08 17:08:24 NST 2018;</p>
+                                    <p class=rqvali>Implication of the "Account Lockout" user story.</p>
+                                    <p class=rqveri>Attempt to log in with incorrect credentials until a lockout occurs.</p>
+                                </li>
+                                <li data-moscow=s>Users can log in with their MUN credentials
+                                    <p class=rqdesc> In addition to SuD accounts, credentials from 
+                                        MUN should authenticate directly if already logged into a MUN session
+                                        using the MUN system.  It is unknown at this time whether any API 
+                                        exposed by the MUN system allows this without clearance from MUN ITS</p>
+                                    <p class=rqdata>author:brown; date:Tue Jan 30 20:36:23 NST 2018;</p>
+                                    <p class=rqvali>Client interview on Jan 30 2018</p>
+                                    <p class=rqveri>Log into the system using your MUN account credentials.</p>
+                                </li>
+                            </ol>
+                        </li>
+                        <li>Password Reset
+                            <ol>
+                                <li data-moscow=m>Users have a security question associated with their account
+                                    <p class=rqdesc>They choose the question and provide an answer when their account is
+                                        initially registered. Associated with feature 1: Password reset.</p>
+                                    <p class=rqdata>author:gnan88; date:Wed Mar 14 15:27:30 NST 2018:</p>
+                                    <p class=rqvali>Implication of the "Account Recovery" use case.</p>
+                                    <p class=rqveri>Setting a security question during account signup.</p>
+                                </li>
+                                <li data-moscow=m>Users can reset their password by answering the security question
+                                    <p class=rqdesc>If a correct answer is provided, the user may choose a new password for
+                                        their account. Associated with feature 1: Password reset.</p>
+                                    <p class=rqdata>author:gnan88; date:Wed MAr 14 15:31:14 NST 2018;</p>
+                                    <p class=rqvali>Implication of the "Account Recovery" use case.</p>
+                                    <p class=rqveri>Reset the password of an account by answering the security question correctly.</p>
+                                </li>
+                            </ol>
+                        </li>
+                    </ol> 
+                </li>
+                <li>Posting and Editing
+                    <ol>
+                        <li data-moscow=m>Users can create topic threads
+                            <p class=rqdesc>Postings will be organized into threads, which can be 
+                            initiated by users. Associated with feature 3: Creation and editing of posts.</p>
+                            <p class=rqdata>author:brown; date:Tue Jan 30 20:36:23 NST 2018;</p>
+                            <p class=rqvali>Client interview on Jan 30 2018 indicates a major limitation
+                                 with D2L discussion is the topics can only be initiated by the instructor.</p>
+                            <p class=rqveri>Create a new thread.</p>
+                        </li>
+                        <li data-moscow=m>Users can post in existing topic threads
+                            <p class=rqdesc>Posts within a topic thread will be displayed in chronological order
+                                beneath the opening post. Associated with feature 3: Creation and editing of posts.</p>
+                            <p class=rqdata>author:gnan88; date:Wed Mar 07 17:24:17 NST 2018;</p>
+                            <p class=rqvali>Implication of the "Topic Creation" use case.</p>
+                            <p class=rqveri>Post in an existing topic thread.</p>
+                        </li>
+                        <li data-moscow=m>Users can edit or delete their own posts
+                            <p class=rqdesc>User accounts are linked to their posts so that users cannot edit or delete
+                                posts that do not belong to them. Associated with feature 3: Creation and editing of posts.</p>
+                            <p class=rqdata>author:gnan88; date:Wed Mar 07 17:36:41 NST 2018;</p>
+                            <p class=rqvali>Implication of the "Topic Creation" use case.</p>
+                            <p class=rqveri>Edit or delete a post.</p>
+                        </li>
+                        <li data-moscow=s>Topic threads are displayed in chronological order
+                            <p class=rqdesc>New threads are posted at the top of the topic list.</p>
+                            <p class=rqdata>author:gnan88; date:Sat Mar 10 14:23:39 NST 2018;</p>
+                            <p class=rqvali>Implication of the "Topic Creation" use case.</p>
+                            <p class=rqveri>Create a new topic and view it at the top of the topic list.</p>
+                        </li>
+                        <li data-moscow=s>Users can include external media in their posts
+                            <p class=rqdesc>Links to URLs, images, videos can be embedded in the body of a post.</p>
+                            <p class=rqdata>author:gnan88; date:Thu Mar 08 10:43:12 NST 2018;</p>
+                            <p class=rqvali>Client interview on Mar 07 2018.</p>
+                            <p class=rqveri>Make a post including a link to external media.</p>
+                        </li>
+                    </ol>
+                </li>
+                <li>Subscriptions and Notifications
+                    <ol>
+                        <li data-moscow=m>Users can subscribe to topic threads
+                            <p class=rqdesc>Subscriptions allow users to monitor the development of threads that they are
+                                interested in. Associated with feature 4: Subscription to topics and notification of new posts.</p>
+                            <p class=rqdata>author:gnan88; date:Thu Mar 08 10:47:50 NST 2018;</p>
+                            <p class=rqvali>Implication of "Receive Subscription Notification" use case.</p>
+                            <p class=rqveri>Subscribe to a topic thread.</p>
+                        </li>
+                        <li data-moscow=m>Users will receive a notification when a new post is made in a subscribed thread
+                            <p class=rqdesc>The notification will remain visible until the user views the thread or dismisses it.
+                                Associated with feature 4: Subscription to topics and notification of new posts.</p>
+                            <p class=rqdata>author:gnan88; date:Thu Mar 08 10:55:35 NST 2018;</p>
+                            <p class=rqvali>Implication of "Receive Subscription Notification" use case.</p>
+                            <p class=rqveri>Receive a notification from a subscribed thread.</p>
+                        </li>
+                        <li data-moscow=m>Users can unsubscribe from a thread
+                            <p class=rqdesc>Notifications will no longer be received from a thread after a subscription is cancelled.
+                                Associated with feature 4: Subscription to topics and notification of new posts.</p>
+                            <p class=rqdata>author:gnan88; date:Thu Mar 08 10:59:02 NST 2018;</p>
+                            <p class=rqvali>Implication of "Receive Subscription Notification" use case.</p>
+                            <p class=rqveri>Unsubscribe from a thread.</p>
+                        </li>
+                        <li data-moscow=s>Users can view a list of their subscribed threads
+                            <p class=rqdesc>They can manage their subscriptions within this list, or navigate to any of the threads.</p>
+                            <p class=rqdata>author:gnan88; date:Thu Mar 08 11:04:16 NST 2018;</p>
+                            <p class=rqvali>Implication of "Receive Subscription Notification" use case.</p>
+                            <p class=rqveri>View a subscribed thread list.</p>
+                        </li>
+                    </ol>
+                </li>
+                <li>Discussion Groups
+                    <ol>
+                        <li data-moscow=m>Users can create and name discussion groups
+                            <p class=rqdesc>Other users can be added to the groups. Associated with feature 5: Creation of
+                                discussion groups.</p>
+                            <p class=rqdata>author:gnan88; date:Thu Mar 08 11:15:48 NST 2018;</p>
+                            <p class=rqvali>Implication of "Viewing a Restricted Topic" use case.</p>
+                            <p class=rqveri>Create or join a discussion group.</p>
+                        </li>
+                        <li data-moscow=m>Users can restrict visibility of topic threads to selected discussion groups
+                            <p class=rqdesc>Only members of a designated discussion group will be able to see and post in a restricted thread.
+                                Associated with feature 5: Creation of discussion groups.</p>
+                            <p class=rqdata>author:gnan88; date:Thu Mar 08 11:20:00 NST 2018;</p>
+                            <p class=rqvali>Implication of "Viewing a Restricted Topic" use case.</p>
+                            <p class=rqveri>Restrict visibility of a topic thread, then attempt to view it from an account that does not have
+                                access to it.</p>
+                        </li>
+                        <li data-moscow=m>Users can leave discussion groups
+                            <p class=rqdesc>They will no longer be able to see threads restricted to that discussion group. Associated with
+                                feature 5: Creation of discussion groups.</p>
+                            <p class=rqdata>author:gnan88; date:Thu Mar 08 11:26:15 NST 2018;</p>
+                            <p class=rqvali>Implication of "Viewing a Restricted Topic" use case.</p>
+                            <p class=rqveri>Leave a discussion group.</p>
+                        </li>
+                    </ol>
+                </li>
+                <li>Searching and Tagging
+                    <ol>
+                        <li data-moscow=s>Users can search for posts
+                            <p class=rqdesc>The search function will locate posts containing the search criteria and
+                                present them to the user.</p>
+                            <p class=rqdata>author:gnan88; date:Wed Mar 14 15:38:23 NST 2018;</p>
+                            <p class=rqvali>Implication of "Post a Tutorial Thread" use case.</p>
+                            <p class=rqveri>Use the search function to find a post.</p>
+                        </li>
+                        <li data-moscow=c>Users can add tags to their posts
+                            <p class=rqdesc>Tags allow the search function to easily locate relevant posts.</p>
+                            <p class=rqdata>author:gnan88; date:Wed Mar 14 15:42:14 NST 2018;</p>
+                            <p class=rqvali>Implication of "Post a Tutorial Thread" use case.</p>
+                            <p class=rqveri>Tag a post and search for the tag.</p>
+                        </li>
+                    </ol>
+                </li>
+                <li>Admin Operations
+                    <ol>
+                        <li data-moscow=s>Moderator privileges are assignable. 
+                            <p class=rqdesc> An administrator can assign moderator privileges to 
+                                accounts.</p>
+                            <p class=rqdata>author:brown; date:Thr Feb 1 15:12:20 NST 2018;</p>
+                            <p class=rqvali>This is a clear implication from the
+                                 <a href="brown/usecaseReviewPost.html"><em>Review Postings</em> 
+                                use case.</a></p>
+                            <p class=rqveri>Log in as moderator, try the moderator operations.</p>
+                             <ol>
+                                <li data-moscow=s>Postings rejected by a moderator are not displayed. 
+                                    <p class=rqdesc> Once a moderator rejects a posting, it is only 
+                                        viewable by the poster or a user with moderator or similar
+                                         priviledges.</p>
+                                    <p class=rqdata>author:brown; date:Thr Feb 1 15:12:20 NST 2018;</p>
+                                    <p class=rqvali>For details of the proposed interaction sequence, see the
+                                         <a href="brown/usecaseReviewPost.html"><em>Review Postings</em> 
+                                        use case.</a></p>
+                                    <p class=rqveri>Log in as moderator, try the moderator operations.</p>
+                                </li>
+                            </ol>
+                        </li>
+                    </ol>
+                </li>                    
+            </ol>
+        </li>
+        <li> Usability
+            <ol>
+                <li data-moscow=c>The color scheme of the SuD can be changed
+                    <p class=rqdesc>The availability of different color schemes can improve visibility for users with visual sensitivities.</p>
+                    <p class=rqdata>author:gnan88; date:Sat Mar 10 14:10:36 NST 2018;</p>
+                    <p class=rqvali>Accommodation for users with different visual needs.</p>
+                    <p class=rqveri>Changing the color scheme.</p>
+                </li>
+            </ol>
+        </li>
+        <li> Reliability
+        </li>
+        <li> Performance
+        </li>
+        <li> Supportability
+            <ol>
+                <li data-moscow=s>Coding practices used in implementation are standardized
+                    <p class=rqdesc>This facilitates loose coupling of modules and allows support updates to be implemented with minimal
+                        side effects.</p>
+                    <p class=rqdata>author:gnan88; date:Wed Mar 14 15:49:55 NST 2018;</p>
+                    <p class=rqvali>Imposed by the COMP2005 context of the project</p>
+                    <p class=rqveri>Observe the interfaces and organization of different modules of code.</p>
+                </li>
+            </ol>
+        </li>
+        <li> Design constraints
+            <ol>
+                <li data-moscow=m>The Flask framework is used. 
+                    <p class=rqdesc> Use of the flask web development framework imposes design 
+                    restrictions regarding how web services are stuructured and how mobile devices
+                     are supported. Much of the project architecture is pre-determined by the flask
+                     framework. </p>
+                    <p class=rqdata>author:brown; date:Tue Jan 30 20:36:23 NST 2018;</p>
+                    <p class=rqvali>Imposed by the COMP2005 context of the project</p>
+                    <p class=rqveri>Examine the implementation code.</p>
+                </li>
+            </ol> 
+        </li>
+        <li> Implementation requirements
+        </li>
+        <li> Interface requirements
+        </li>
+        <li> Physical requirements
+            <ol>
+                <li data-moscow=w>Target deployment uses the MUN CS apache server. 
+                    <p class=rqdesc> The apache server at MUN CS is open to students, but cannot be 
+                    configured by students. Attention must be paid to this requirement throughout the
+                    project to ensure there are no server configuration needs. </p>
+                    <p class=rqdata>author:brown; date:Tue Jan 30 20:36:23 NST 2018;</p>
+                    <p class=rqvali>Imposed by the COMP2005 context of the project</p>
+                    <p class=rqveri>Check the server IP address.</p>
+                </li>
+            </ol> 
+        </li>
+    </ol>      
+  </body>
+</html>
