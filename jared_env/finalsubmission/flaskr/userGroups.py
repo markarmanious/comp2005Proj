@@ -12,13 +12,26 @@ made here.
 import sqlite3
 
 
+dataBase = 'flaskr/flaskr.db'
+schema = 'schema.sql'
 
 def connect_db():
 	"""Connects to the user group database."""
 	
-	databaseConnection = sqlite3.connect('schema.db')#Connect to the database
+	databaseConnection = sqlite3.connect(dataBase)#Connect to the database
 	databaseConnection.row_factory = sqlite3.Row#Set the row factory method to comply with sqlite3
 	return databaseConnection#Return the connection object back to caller
+
+
+def init_userGroupsDB():
+    """Initialize the database for user groups using the sql file from the global "schema" variable (needed for unittest)"""
+    
+    db = connect_db()#Connect to the database
+    with open(schema, mode='r') as f:#Open the schema file
+            db.cursor().executescript(f.read())#Apply the schema to the database
+    db.commit()#Actually make the changes
+    db.close()#Close the database connection
+
 
 def searchDB():
     """Prints the entire user groups table from user groups database"""
@@ -88,11 +101,13 @@ def updateGroupMembership(group, membership):
 
     db = connect_db()#Connect to the user groups database
     cursor = db.cursor()#Create cursor object for manipulating the database table
-    cursor.execute("UPDATE userGroups SET usersInGroup=? WHERE groupName=?", (membership, group))#Search the database for the user group id and update the list of group members
-    db.commit()#Commit the changes to the database
+    try:
+        cursor.execute("UPDATE userGroups SET usersInGroup=? WHERE groupName=?", (membership, group))#Search the database for the user group id and update the list of group members
+    except:
+        cursor.execute("DELETE FROM userGroups WHERE groupName=?", (group,))#The group was empty and failes a check condition so remove the group instead
+    db.commit()#Commit the changes to the database    
     db.close()#Close the database connection
     return None
-
 
 
 def createGroup(group, users):

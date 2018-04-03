@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if session.logged_in %}
+  <div class="center">
+    <h2>add a topic</h2>
+  </div>
+    <form action="{{ url_for('add_topic') }}" method=post class=add-topic>
+      <dl>
+        <dt>Title:
+        <dd><input type=text size=30 name=title>
+        <dt>group Disscution:
+        <dd><input type=text size=30 name=groupDisscution>
+
+        <dd><input type=submit value=Share>
+      </dl>
+    </form>
+  {% endif %}
+  <div class="center">
+  <h2 id="topics">topics</h2>
+</div>
+  <ul class=topics>
+  {% for topic in topics %}
+    <li><a href="{{ '/topic/%s'%topic.title }}">><h2>{{ topic.title }}</h2></a>
+    {% if topic['id'] in notifiedList %}
+      <h6 class="inline red">*NEW*</h6>
+    {% endif %}
+
+    {% if session.logged_in %}
+      {% if topic['id'] in subsList %} 
+      <form class="inline" action="{{ url_for('unSubscribe', topic=topic.title) }}" method=post class=add-topic> 
+      <button type="submit"  class="right">Unsubscribe</button>
+      </form>
+      {% else %}
+      <form class="inline" action="{{ url_for('subscribe', topic=topic.title) }}" method=post class=add-topic> 
+      <button type="submit"  class="right">Subscribe</button>
+      </form>
+      {% endif %}
+    {% endif %}
+
+  {% else %}
+    <li><em>Unbelievable.  No topics here so far</em>
+  {% endfor %}
+  </ul>
+{% endblock %}
