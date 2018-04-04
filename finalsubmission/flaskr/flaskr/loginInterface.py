@@ -45,6 +45,13 @@ def logUserIn():
             db.commit()
             return redirect(url_for('show_topics'))
     return render_template('login.html', error=error)
+def getUserId():
+    db = get_db()
+    cur = db.execute('select id from Users where isLoggedIn=1')
+    user = cur.fetchone()
+    if (user):
+        return user[0]
+    return None
 
 
 
