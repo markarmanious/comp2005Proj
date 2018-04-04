@@ -99,4 +99,4 @@ def checkIfGroupExists(group):
     return - returns True is group exists and False if it does NOT exist
     """
 
-    return userGroups.checkIfGroupExists(group)
+    return checkIfGroupExists(group)
