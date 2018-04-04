@@ -1,0 +1,186 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Use Cases and User Stories</title>
+</head>
+<body>
+	<h1>Use Cases and User Stories</h1>
+	<h2>Account Lockout User Story</h2>
+	<p>The user attempts to login to her account. The user enters the wrong password. The user makes several attempts to log in again with the wrong password. After several failed attempts, the SuD locks the account associated with the user name.</p>
+	<h2>Use Cases</h2>
+	<p><strong>Title: Account Registration</strong><br>
+		<strong>Primary Actor: </strong>New User<br>
+		<strong>Stakeholders and Interests:</strong>
+		<blockquote>
+			User - wants to create an account.<br>
+			Website Owner - wants to let users access the system.
+		</blockquote>
+		<strong>Precondition: </strong> User doesn't have an account.<br>
+		<strong>Main success scenario: </strong>
+		<blockquote>
+			<ol>
+				<li>User clicks on login button.</li>
+				<li>SuD redirects to login page.</li>
+				<li>User clicks 'create account'.</li>
+				<li>SuD redirects user to account creation page.</li>
+				<li>User enters a username and password.</li>
+				<li>User account is successfully created.</li>
+				<li>User is automatically logged in.</li>
+			</ol>
+		</blockquote>
+		<strong>Extensions: </strong>
+		<blockquote>
+			6a. User account already exists:<br>
+			<blockquote>
+				6a1. SuD notifies user that the username is already in use<br>
+				6a2. SuD prompts user to either enter a different username or click 'forgot password'.<br>
+				6a3. User returns to step 5 or is redirected to password recovery.
+			</blockquote>
+		</blockquote>
+	</p><br>
+	<p><strong>Title: Posting a Topic Thread</strong><br>
+		<strong>Primary Actor: </strong>Poster<br>
+		<strong>Stakeholders and Interests:</strong>
+		<blockquote>
+			Poster - wants to make a new topic thread and post in it.<br>
+			Other users - want to see the new topic thread and posts.
+		</blockquote>
+		<strong>Precondition: </strong> Poster is logged into their account.<br>
+		<strong>Main success scenario: </strong>
+		<blockquote>
+			<ol>
+				<li>Poster logs in.</li>
+				<li>Poster navigates to topics page.</li>
+				<li>Poster clicks 'create new topic'.</li>
+				<li>Poster enters topic title and initial post.</li>
+				<li>SuD processes submission and displays new topic with other topics.</li>
+				<li>Other users access new topic.</li>
+				<li>Other users post in new topic.</li>
+			</ol>
+		</blockquote>
+		<strong>Extensions: </strong>
+		<blockquote>
+			5a. Topic already exists:<br>
+			<blockquote>
+				5a1. SuD notifies user that the topic already exists.
+			</blockquote>
+		</blockquote>
+	</p><br>
+	<p><strong>Title: Receive Subscription Notification</strong><br>
+		<strong>Primary Actor: </strong>User<br>
+		<strong>Stakeholders and Interests:</strong>
+		<blockquote>
+			Subscribed User - wants to receive notifications about new posts in a subscribed thread.<br>
+			SuD - wants to notify all subscribed users that a new post has been made in the thread.<br>
+			Poster - wants other users to be aware of their new post.
+		</blockquote>
+		<strong>Precondition: </strong> User is subscribed to the topic thread.<br>
+		<strong>Main success scenario: </strong>
+		<blockquote>
+			<ol>
+				<li>Poster makes a new post in a topic thread which has subscribers.</li>
+				<li>Subscribed user logs in to her account to view topics.</li>
+				<li>SuD recognizes that a new post has been made in a subscribed topic thread which the user has not seen.</li>
+				<li>SuD notifies user of the new post.</li>
+				<li>User views the topic with the new post.</li>
+				<li>SuD removes notification of new post.</li>
+			</ol>
+		</blockquote>
+		<strong>Extensions: </strong>
+		<blockquote>
+			5a. User does not view the new post:<br>
+			<blockquote>
+				5a1. Notification remains until the post is viewed.
+			</blockquote>
+		</blockquote>
+	</p><br>
+	<p><strong>Title: Viewing a Restricted Topic</strong><br>
+		<strong>Primary Actor: </strong>User<br>
+		<strong>Stakeholders and Interests:</strong>
+		<blockquote>
+			User - wants to view a topic restricted to a specific discussion group.<br>
+			Group - wants to ensure only group members can view the topic.
+		</blockquote>
+		<strong>Precondition: </strong> User is logged into their account and belongs to a discussion group.<br>
+		<strong>Main success scenario: </strong>
+		<blockquote>
+			<ol>
+				<li>User clicks on a topic that is restricted to a discussion group.</li>
+				<li>SuD loads the group membership from the database.</li>
+				<li>SuD compares the user ID to the group member IDs.</li>
+				<li>SuD finds the user ID in the group membership.</li>
+				<li>SuD loads the topic page.</li>
+				<li>User views the topic page.</li>
+				<li>User posts in the topic page.</li>
+			</ol>
+		</blockquote>
+		<strong>Extensions: </strong>
+		<blockquote>
+			4a. SuD does not find the user ID in the group membership:<br>
+			<blockquote>
+				4a1. SuD notifies user that the topic is restricted to a group of which they are not a member.<br>
+				4a2. User returns to main topics page.
+			</blockquote>
+		</blockquote>
+	</p><br>
+	<p><strong>Title: Post a Tutorial Thread</strong><br>
+		<strong>Primary Actor: </strong>Poster<br>
+		<strong>Stakeholders and Interests:</strong>
+		<blockquote>
+			Poster - wants to create a new thread to provide information to other users.<br>
+			User - wants to be able to access this information and reply to the thread.<br>
+			Moderator - wants to ensure the content follows the rules of the forum.
+		</blockquote>
+		<strong>Precondition: </strong> Poster has an account and is logged in.<br>
+		<strong>Main success scenario: </strong>
+		<blockquote>
+			<ol>
+				<li>Poster selects the appropriate subforum for the topic of their tutorial.</li>
+				<li>SuD navigates to this subforum.</li>
+				<li>Poster chooses to create a new thread.</li>
+				<li>SuD opens a new thread page with text boxes for the title, body, and optional tags.</li>
+				<li>Poster enters a title for the tutorial.</li>
+				<li>Poster enters the body of the tutorial.</li>
+				<li>Poster enters tags for the tutorial to be retrieved by the search function.</li>
+				<li>Poster submits the thread.</li>
+				<li>SuD sends the thread to the moderator for revision.</li>
+				<li>Moderator approves the thread and posts it to the forum.</li>
+			</ol>
+		</blockquote>
+		<strong>Extensions: </strong>
+		<blockquote>
+			10a. Moderator rejects thread:<br>
+			<blockquote>
+				10a1. Moderator provides reason for rejection.<br>
+				10a2. Poster instantiates <em>Modify Posting</em> use case.
+			</blockquote>
+		</blockquote>
+	</p><br>
+	<p><strong>Title: Account Recovery</strong><br>
+		<strong>Primary Actor: </strong>User<br>
+		<strong>Stakeholders and Interests:</strong>
+		<blockquote>
+			User - wants to recover their password<br>
+		</blockquote>
+		<strong>Precondition: </strong> User has forgotten their password and knows their security question/answer.<br>
+		<strong>Main success scenario: </strong>
+		<blockquote>
+			<ol>
+				<li>User fails login attempt.</li> 
+				<li>User clicks forgot password link.</li>
+				<li>User is prompted to answer a security question.</li>
+				<li>User answers security question.</li>
+				<li>User resets password.</li>
+				<li>User accesses account.</li>
+			</ol>
+		</blockquote>
+		<strong>Extensions: </strong>
+		<blockquote>
+			4a. User provides incorrect answer:<br>
+			<blockquote>
+				4a1. User may try again a limited number of times before being locked out of password reset.
+			</blockquote>
+		</blockquote>
+	</p><br>
+</body>
+</html>
