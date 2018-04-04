@@ -5,10 +5,14 @@ database = 'flaskr/flaskr.db'
 Module for the Reset Password feature. Returns the data of the provided user and as well has a functin to set a new password.
 """
 def createConnection():
-	conn = sqlite3.connect(database)
-	conn.row_factory = sqlite3.Row
-	#cur = conn.cursor()
-	return conn
+	try:
+		conn = sqlite3.connect(database)
+		conn.row_factory = sqlite3.Row
+		#cur = conn.cursor()
+		return conn
+	except Error as e:
+		print(e)
+	return None
 
 def getUserInfo(temp_user):
 	"""
