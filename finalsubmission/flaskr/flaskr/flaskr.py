@@ -4,7 +4,7 @@ import sqlite3
 from flask import Flask, request, session, g, redirect, url_for, abort, \
      render_template, flash
 
-userId = '1'
+
 app = Flask(__name__) # create the application instance :)
 app.config.from_object(__name__) # load config from this file , flaskr.py
 
@@ -62,6 +62,7 @@ def close_db(error):
 
 @app.route('/topic/<topic>/sub', methods=['POST'])
 def subscribe(topic):
+    userId = getUserId()
     topicId= getTopicId(topic)
     create_subscription(userId, topicId)
     return redirect(url_for('show_topics'))
@@ -69,6 +70,7 @@ def subscribe(topic):
 
 @app.route('/topic/<topic>/unsub', methods=['POST'])
 def unSubscribe(topic):
+    userId = getUserId()
     topicId= getTopicId(topic)
     unsubscribe(userId, topicId)
     return redirect(url_for('show_topics'))
@@ -84,6 +86,7 @@ def register():
 
 @app.route('/')
 def show_topics():
+    userId = getUserId()
     db = get_db()
     cur = db.execute('select title,id,groupDisscution from topics order by createdAt desc')
     userNameCur = db.execute('select userName from users where isLoggedIn=?',[1])
@@ -102,6 +105,7 @@ def show_topics():
 
 @app.route('/addtopic', methods=['POST'])
 def add_topic():
+    userId = getUserId()
     title = request.form['title']
     gorup = request.form['groupDisscution']
     db = get_db()
@@ -112,6 +116,7 @@ def add_topic():
     return redirect(url_for('show_topics'))
 @app.route('/topic/<topic>/addpost', methods=['POST'])
 def add_post(topic):
+    userId = getUserId()
     content = request.form['content']
     title = request.form['title']
     db = get_db()
@@ -123,6 +128,7 @@ def add_post(topic):
     return redirect(url_for('show_posts',topic=topic))
 @app.route('/post/<postId>/editpost', methods=['GET','POST'])
 def edit_post(postId):
+    userId = getUserId()
     db = get_db()
     cur = db.execute('select title,content,topic from posts where id=?',[postId])    
     post = cur.fetchone()
@@ -139,6 +145,7 @@ def edit_post(postId):
 
 @app.route('/topic/<topic>',methods=['GET'])
 def show_posts(topic):
+    userId = getUserId()
     db = get_db()
     cur = db.execute('select title, content, userId, id from posts where topic=? order by createdAt desc', [topic])
     posts = cur.fetchall()
