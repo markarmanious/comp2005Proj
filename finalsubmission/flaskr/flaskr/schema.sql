@@ -49,7 +49,7 @@ create table userGroups (
 	CHECK(groupName <> '' and usersInGroup <> '')
 );
 
-insert into Users (id,username,pass,isLoggedIn,question,answer) values (1,'mark','password',1,'whats your name','mark');
+insert into Users (id,username,pass,isLoggedIn,question,answer) values (1,'mark','password',0,'whats your name','mark');
 insert into topics (id,userId,groupDisscution,title) values (1,1,'computerScience','welcome');
 insert into subs (id,userId,topicId,notified) values (1,1,1,0);
 insert into posts (id,userId,title,content,topic) values (1,1,'welcome','welcome to out application',1);
