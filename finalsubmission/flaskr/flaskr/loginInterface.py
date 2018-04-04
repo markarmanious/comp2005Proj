@@ -55,4 +55,4 @@ def getUserId():
 
 
 
-from .flaskr import *
+from flaskr import *
