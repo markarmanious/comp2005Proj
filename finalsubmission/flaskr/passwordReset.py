@@ -1,10 +1,14 @@
 import os
 import sqlite3
-from flaskr import *
+database = 'flaskr/flaskr.db'
 """
 Module for the Reset Password feature. Returns the data of the provided user and as well has a functin to set a new password.
 """
-
+def createConnection():
+	conn = sqlite3.connect(database)
+	conn.row_factory = sqlite3.Row
+	#cur = conn.cursor()
+	return conn
 
 def getUserInfo(temp_user):
 	"""
@@ -14,9 +18,11 @@ def getUserInfo(temp_user):
 		e.g. getUserInfo("icm")
 			 getUserInfo(username)
 	"""
-	db = get_db()
-	curr = db.execute('select * from users where username=?',(temp_user,))
+	db = createConnection()
+	con = db.cursor()
+	curr = con.execute('select * from Users where username=?',(temp_user,))
 	d = curr.fetchone()
+	db.close()
 	return d
 	
 
@@ -30,9 +36,10 @@ def setPassword(temp_user, newP):
 		e.g. setPassword("icm", "*****")
 			 setPassword(username, password)
 	"""
-	db = get_db()
-	db.execute('''update users set pass = ? where username=?''', (newP, temp_user,))
+	db = createConnection()
+	con = db.cursor()
+	con.execute('''update Users set pass = ? where username=?''', (newP, temp_user,))
 	db.commit()
-
+	db.close()
 
 
