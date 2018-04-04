@@ -218,7 +218,7 @@ def newPassword():
 	return redirect(url_for('show_topics')) #to update with new function from whoever
 from passwordReset import *
 from .subscriptions import *
-from loginInterface import *
+from .loginInterface import *
 from userGroupsInterface import *
 import userGroupsInterface
     
