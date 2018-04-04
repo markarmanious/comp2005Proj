@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 {% block body %}
 	{% if session.logged_in %}
+		<h2>Create Group:</h2>
 		<form action="{{ url_for('add_userGroup') }}" method=post class=add-entries>
 			<dl>
 				<dt>New Group:
@@ -10,6 +11,7 @@
 				<dd><input type=submit value=Submit>
 			</dl>
 		</form>
+		<h2>Add user to group:</h2>
 		<form action="{{ url_for('add_userToAGroup') }}" method=post class=add-entries>
 			<dl>
 				<dt>Existing Group:
@@ -19,6 +21,7 @@
 				<dd><input type=submit value=Submit>
 			</dl>
 		</form>
+		<h2>Remove user from group:</h2>
 		<form action="{{ url_for('remove_userFromAGroup') }}" method=post class=add-entries>
 			<dl>
 				<dt>Existing Group:
